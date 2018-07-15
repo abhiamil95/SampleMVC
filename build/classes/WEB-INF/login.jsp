@@ -1,32 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:Master title="LoginPage">
 <jsp:attribute name="content">
 <section id="content">
     <div class="sub-page">
       <div class="sub-page-left box-9">
         <h2>Contact Form</h2>
-        <form id="form" method="post" action="#">
+        <c:url var="action" value="/Register"></c:url>
+        <form:form method="post" action="${action}" modelAttribute="user" id="form">
           <fieldset>
-            <label>
-              <input type="text" value="Name" onBlur="if(this.value=='') this.value='Name'" onFocus="if(this.value =='Name' ) this.value=''">
-            </label>
-            <label>
-              <input type="text" value="Email" onBlur="if(this.value=='') this.value='Email'" onFocus="if(this.value =='Email' ) this.value=''">
-            </label>
-            <label>
-              <input type="text" value="Phone" onBlur="if(this.value=='') this.value='Phone'" onFocus="if(this.value =='Phone' ) this.value=''">
-            </label>
-            <label>
-              <input type="text" value="UserName" onBlur="if(this.value=='') this.value='Phone'" onFocus="if(this.value =='Phone' ) this.value=''">
-            </label>
-            <label>
-              <input type="text" value="Password" onBlur="if(this.value=='') this.value='Phone'" onFocus="if(this.value =='Phone' ) this.value=''">
-            </label>
-            <div class="btns"><a href="#" class="button">Clear</a><a href="#" class="button" onClick="document.getElementById('form').submit()">Send</a></div>
+            <form:label path="name">
+              <form:input path="name" type="text" value="Name" name="name" onBlur="if(this.value=='') this.value='Name'" onFocus="if(this.value =='Name' ) this.value=''"/>
+            </form:label>
+            <form:label path="username">
+              <form:input path="username" type="text" value="UserName" name="username" onBlur="if(this.value=='') this.value='Phone'" onFocus="if(this.value =='Phone' ) this.value=''"/>
+            </form:label>
+            <form:label path="password">
+              <form:input path="password" type="text" value="Password" name="password" onBlur="if(this.value=='') this.value='Phone'" onFocus="if(this.value =='Phone' ) this.value=''"/>
+            </form:label>
+            <%-- <form:label>
+              <form:input type="text" value = "<fmt:formatDate value="${cForm.dob}" pattern="MM-dd-yyyy" />" name="dob" onBlur="if(this.value=='') this.value='Phone'" onFocus="if(this.value =='Phone' ) this.value=''"/>
+            </form:label> --%>
+            <form:label path="gender">
+              <form:input path="gender" type="text" value="gender" name="gender" onBlur="if(this.value=='') this.value='Phone'" onFocus="if(this.value =='Phone' ) this.value=''" />
+            </form:label>
+            <div class="btns"><a href="#" class="button">Reset</a><a href="#" class="button" onClick="document.getElementById('form').submit()">Submit</a></div>
+            <input type="submit" value="SUBMIT"/>
           </fieldset>
-        </form>
+        </form:form>
       </div>
       <div class="sub-page-right">
         <h2>Find Us</h2>

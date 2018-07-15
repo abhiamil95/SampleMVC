@@ -13,7 +13,11 @@
 	http://www.springframework.org/schema/tx/spring-tx.xsd
 	">
 	<mvc:resources location="/resources/" mapping="/resources/**" cache-period="31556926"></mvc:resources>
-	<context:component-scan base-package="com.sample.controller"/>
+	<context:property-placeholder location="classpath:database.properties"/>
+	<context:component-scan base-package="com.carservice.controller"/>
+	<context:component-scan base-package="com.carservice.model"/>
+	<context:component-scan base-package="com.carservice.dao.impl" />
+	<context:component-scan base-package="com.carservice.service.impl" />
 	<mvc:annotation-driven/>
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
@@ -23,6 +27,36 @@
             <value>.jsp</value>
         </property>
     </bean>
-    
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+     <property name="driverClassName" value="${database.driver}"></property>
+     <property name="url" value="${database.url}"></property>
+     <property name="username" value="${database.user}" />
+     <property name="password" value="${database.password}" />
+</bean>
+
+<bean id="sessionFactory"
+  class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+  <property name="dataSource" ref="dataSource" />
+  <property name="annotatedClasses">
+   <list>
+    <value>com.carservice.model.User</value>    
+   </list>
+  </property>
+  <property name="hibernateProperties">
+   <props>
+    <prop key="hibernate.dialect">${database.dialect}</prop>
+     <prop key="hibernate.hbm2ddl.auto">update</prop>
+    <prop key="hibernate.show_sql">true</prop>
+   </props>
+  </property>
+ </bean>
+ 
+ <tx:annotation-driven />   
+ <bean id="transactionManager"
+  class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+  <property name="sessionFactory" ref="sessionFactory" />
+ </bean>
+ 
+ 
   
-	</beans>
+</beans>
